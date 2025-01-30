@@ -1,52 +1,31 @@
-# Tree Coin Collection
+# K-th Ancestor in Binary Tree
 
-## Problem Description
+This C++ program helps to find the k-th ancestor of a node in a binary tree. The tree is constructed using a level-order traversal, and each node is mapped to its parent. You can input multiple queries to determine the k-th ancestor of any node.
 
-Given a tree with `n` nodes, where each node has a coin, the goal is to find the minimum number of edges to traverse in order to collect all the coins. The tree is represented by an undirected graph, and a traversal along an edge costs 2 (round trip). The task is to determine the minimal number of edges that must be traversed to collect all coins.
+## Features:
+- Build a binary tree from level-order input.
+- Map each node to its parent.
+- Find the k-th ancestor of a node.
+- Interactive user input for testing different cases.
 
-## Solution Approach
+## How It Works:
+1. **Tree Construction**: The tree is built using level-order input, where `-1` denotes a `null` node.
+2. **Mapping Parents**: The program uses a queue to map each node to its parent for easy traversal.
+3. **K-th Ancestor Query**: Given a node and a value `k`, the program traverses upward to find the k-th ancestor of the node.
 
-This solution uses a Depth-First Search (DFS) algorithm to traverse the tree. For each node, the algorithm checks its neighbors. If a neighbor contains a coin, the algorithm adds 2 edges (round trip) to the total traversal cost. The traversal stops when all coins are collected.
+## Usage:
+1. **Input**: 
+   - The program first asks for the level-order traversal of the binary tree (`-1` for null nodes).
+   - Then, it asks for a node value and the integer `k` to find the k-th ancestor.
+   
+2. **Output**: 
+   - The program will output the k-th ancestor if it exists, or `-1` if the ancestor does not exist.
 
-## How It Works
+## Example:
 
-1. **Tree Construction**: The tree is constructed using an adjacency list. Each edge in the tree is represented by a pair of nodes.
-2. **DFS Traversal**: The DFS function checks each node and its neighbors. If a node has a coin, it adds to the edge count.
-3. **Edge Count**: The result is the minimum number of edges required to collect all coins in the tree.
-
-## Example
-
-For a tree with 6 nodes and the following coin distribution:
-
-- Node 0: 1 coin
-- Node 1: 0 coin
-- Node 2: 0 coin
-- Node 3: 0 coin
-- Node 4: 0 coin
-- Node 5: 1 coin
-
-And the tree structure:
-
-0
-/
-1 2 /
-3 4 \ / 5---/
+### Input:
+Enter node values for level-order traversal (-1 for null): 1 2 3 4 5 -1 6 Enter node and k: 5 2
 
 
-The minimum edges required to collect all coins is `6`.
-
-## Running the Code
-
-1. Clone the repository.
-2. Compile the C++ code using a C++ compiler.
-3. Run the compiled program.
-
-Example:
-```bash
-g++ main.cpp -o tree_coin_collection
-./tree_coin_collection
-Input Format:
-coins array: An array where each element represents whether a node has a coin (1 for coin, 0 for no coin).
-edgesList array: A list of edges where each edge is represented by a pair of integers indicating the connected nodes.
-Output:
-The minimum number of edges required to collect all coins.
+### Output:
+The 2-th ancestor of node 5 is: 1
