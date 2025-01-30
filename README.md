@@ -1,69 +1,78 @@
-# Linked Maze Navigation Using Clue-Based Movement
+# Exam Paper Submission & Marking Simulation
 
 ## Overview
-This program implements a **linked list maze** where each cell (node) is linked to its adjacent neighbors (left, right, up, down). The traversal path is determined using **clues derived from node values**.
+This program models the **submission and grading process** of student exam papers using **stacks and queues**. It specifically tracks the journey of a student named **Hammad** to determine:
+1. When he submits his exam.
+2. How long he has to wait.
+3. When his paper is marked.
+4. When he receives his paper back.
 
 ## Features
-- **Reads a maze from a file (`maze.txt`) and constructs a grid of linked nodes.**
-- **Each node has four possible links**: left, right, up, and down.
-- **Uses two clues to navigate**:
-  1. **Row Clue**: Sum of digits of the node's value modulo the total rows.
-  2. **Column Clue**: Number of digits in the node's value.
-- **Stops traversal if**:
-  - It reaches an already visited node (**Elite Node**).
-  - It encounters an invalid move.
+- **Reads student names from a file (`data.txt`) and assigns them roll numbers.**
+- **Uses a stack for paper submission** (Last-In, First-Out order).
+- **Uses a queue for students waiting to submit** (First-In, First-Out order).
+- **Uses another stack for marking papers** (Graded in the order of submission).
+- **Tracks specific statistics related to Hammad’s paper submission and marking process.**
 
 ## How It Works
-1. **File Reading & Maze Construction**
-   - Reads a CSV file (`maze.txt`) where each value represents a node in the maze.
-   - Links nodes to form a doubly linked grid.
-  
-2. **Clue-Based Navigation**
-   - Starts traversal from the top-left node (first row, first column).
-   - Uses the **Row Clue** and **Column Clue** to determine the next position.
-   - Moves in the appropriate direction:
-     - **Up**
-     - **Down**
-     - **Left**
-     - **Right**
+### **Step 1: File Reading & Roll Number Assignment**
+- Reads student names from `data.txt`.
+- Assigns roll numbers sequentially, starting from `1`.
 
-3. **Stopping Conditions**
-   - If a node is visited **again**, it is labeled as the **"Elite Node"**, and traversal stops.
-   - If the calculated position **exceeds maze boundaries**, traversal stops.
+### **Step 2: Submission Process**
+- All students submit their papers into a **stack**.
+- **Hammad submits his paper at a specific position** (calculated using 69% of total students).
+- A **queue** handles students who need to wait before submitting.
 
-## Example Maze (`maze.txt` Format)
+### **Step 3: Marking Process**
+- Papers are **graded in the same order they were submitted** using another **stack**.
+- **Hammad’s exam position is tracked throughout the process.**
+
+### **Step 4: Statistics Calculation**
+The program computes:
+1. **How many students submitted before Hammad.**
+2. **How long he had to wait before submitting.**
+3. **Where his paper was placed in the submission stack.**
+4. **Where his paper was placed in the marking stack.**
+5. **When he received his exam back.**
+6. **The maximum and minimum number of exams he had to go through while searching for his paper.**
+
+## **Example Data (`data.txt` Format)**
 ```plaintext
-12,34,56
-78,90,23
-45,67,89
+Ali
+Hammad
+Sara
+Usman
+Ayesha
 Example Execution
 
-Input (maze.txt contents):
-
-16,45,34
-22,73,91
 Processing & Output:
 
-Visiting node with data: 16
-Clue gives row: 1 and column: 2
-Moving right.
+Submission Stack (top to bottom):
+Ayesha (Roll No: 5)
+Usman (Roll No: 4)
+Sara (Roll No: 3)
+Hammad (Roll No: 2)
+Ali (Roll No: 1)
 
-Visiting node with data: 45
-Clue gives row: 2 and column: 2
-Moving down.
+Marked Stack (top to bottom):
+Ali (Roll No: 1)
+Hammad (Roll No: 2)
+Sara (Roll No: 3)
+Usman (Roll No: 4)
+Ayesha (Roll No: 5)
 
-Visiting node with data: 91
-Clue gives row: 2 and column: 2
-Node revisited, ending traversal.
-Elite Node = 91
+Results:
+1. Hammad received his exam after: 3 students.
+2. Hammad had to wait to submit his exam after completing it: 1 students.
+3. Hammad’s exam was placed at number: 2 in the submission stack.
+4. Hammad’s exam was marked at number: 2 in the marked stack.
+5. Hammad’s exam got the place: 3 in the marked exams stack.
+6. Hammad received his exam back after: 3 students.
+7. Maximum number of exams Hammad would have been through: 5.
+8. Minimum number of exams Hammad would have been through: 2.
 Edge Cases Handled
 
-Invalid File Handling: If maze.txt is missing or empty, the program exits safely.
-Out-of-Bounds Moves: Prevents illegal moves outside the maze dimensions.
-Loop Detection: Stops traversal upon revisiting a node.
-Compilation & Execution
-
-To compile and run the program:
-
-g++ linked_maze.cpp -o linked_maze
-./linked_maze
+✅ Handles missing or empty data.txt files gracefully.
+✅ Prevents incorrect calculations if the dataset is small.
+✅ Ensures proper queue and stack behavior in all cases.
