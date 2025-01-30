@@ -1,201 +1,279 @@
 #include <iostream>
+#include <stack>
 #include <queue>
-#include <stdexcept>
-#include <string>
 #include <vector>
 #include <algorithm>
-
 using namespace std;
 
-// Patient structure
-struct Patient {
-    string name;
-    int age;
-    string condition; // Normal, Critical, Intense
-    int priority;     // Derived priority
+// Node structure for Linked List
+struct Node {
+    stack<queue<int> > stackOfQueues;  // Stack of Queues
+    Node* next;
+
+    Node() : next(nullptr) {}  // Default constructor
 };
 
-// Custom exceptions
-class IncompleteInformationException : public runtime_error {
-public:
-    IncompleteInformationException() : runtime_error("Incomplete Information") {}
-};
-
-class ImproperPriorityException : public runtime_error {
-public:
-    ImproperPriorityException() : runtime_error("Improper Derived Priority") {}
-};
-
-class DelayedServingException : public runtime_error {
-public:
-    DelayedServingException() : runtime_error("Delayed Serving") {}
-};
-
-// Function to compare patients by priority
-bool comparePriority(const Patient& a, const Patient& b) {
-    return a.priority < b.priority;  // Lower priority value means higher priority
+// Comparison function for sorting queues
+bool compareQueues(const queue<int>& q1, const queue<int>& q2) {
+    return q1.front() < q2.front();  // Compare by the first element of the queue
 }
 
-// Hospital OPD class
-class HospitalOPD {
-private:
-    queue<Patient> patientQueue;
-
-    // Function to derive priority
-    int derivePriority(const string& condition) {
-        if (condition == "Critical") return 1;
-        if (condition == "Intense") return 2;
-        if (condition == "Normal") return 3;
-        throw ImproperPriorityException();
+// Comparison function for sorting nodes
+bool compareNodes(Node* n1, Node* n2) {
+    if (!n1->stackOfQueues.empty() && !n2->stackOfQueues.empty()) {
+        return n1->stackOfQueues.top().front() < n2->stackOfQueues.top().front();
     }
+    return false;
+}
+
+// Linked List class to handle nodes
+class LinkedList {
+private:
+    Node* head;
 
 public:
-    void enqueuePatient(const string& name, int age, const string& condition) {
-        if (name.empty() || age <= 0 || condition.empty()) {
-            throw IncompleteInformationException();
-        }
-        
-        Patient newPatient;
-        newPatient.name = name;
-        newPatient.age = age;
-        newPatient.condition = condition;
-        newPatient.priority = derivePriority(condition);
-        
-        // Prioritize senior citizens (age 60+)
-        if (age >= 60) {
-            queue<Patient> tempQueue;
-            int count = 0;
-            while (!patientQueue.empty() && count < 3) {
-                tempQueue.push(patientQueue.front());
-                patientQueue.pop();
-                count++;
+    LinkedList() : head(nullptr) {}
+
+    // Insert a new Node at the end of the Linked List
+    void insertNode() {
+        Node* newNode = new Node();
+        if (!head) {
+            head = newNode;
+        } else {
+            Node* temp = head;
+            while (temp->next) {
+                temp = temp->next;
             }
-            patientQueue.push(newPatient); // Add senior citizen
-            while (!tempQueue.empty()) {
-                patientQueue.push(tempQueue.front());
-                tempQueue.pop();
+            temp->next = newNode;
+        }
+    }
+
+    // Insert a queue into a specific node's stack
+    void insertQueueToNode(int nodeIndex) {
+        Node* temp = head;
+        int count = 0;
+
+        // Traverse to the specific node
+        while (temp && count < nodeIndex) {
+            temp = temp->next;
+            count++;
+        }
+
+        if (temp) {
+            queue<int> newQueue;
+            int val;
+            cout << "Enter values for the queue (enter -1 to end): ";
+            while (true) {
+                cin >> val;
+                if (val == -1) break;
+                newQueue.push(val);
+            }
+
+            temp->stackOfQueues.push(newQueue);
+            cout << "Queue added to node " << nodeIndex << endl;
+        } else {
+            cout << "Node " << nodeIndex << " not found.\n";
+        }
+    }
+
+    // Delete a node from the linked list
+    void deleteNode(int nodeIndex) {
+        if (!head) {
+            cout << "List is empty.\n";
+            return;
+        }
+
+        Node* temp = head;
+        if (nodeIndex == 0) {
+            head = temp->next;
+            delete temp;
+            cout << "Node deleted at index " << nodeIndex << endl;
+            return;
+        }
+
+        int count = 0;
+        Node* prev = nullptr;
+        while (temp && count < nodeIndex) {
+            prev = temp;
+            temp = temp->next;
+            count++;
+        }
+
+        if (temp) {
+            prev->next = temp->next;
+            delete temp;
+            cout << "Node deleted at index " << nodeIndex << endl;
+        } else {
+            cout << "Node " << nodeIndex << " not found.\n";
+        }
+    }
+
+    // Delete a queue from a specific node's stack
+    void deleteQueueFromNode(int nodeIndex, int queueIndex) {
+        Node* temp = head;
+        int count = 0;
+
+        // Traverse to the specific node
+        while (temp && count < nodeIndex) {
+            temp = temp->next;
+            count++;
+        }
+
+        if (temp) {
+            if (queueIndex < temp->stackOfQueues.size()) {
+                stack<queue<int> > tempStack;
+
+                // Pop all elements until we reach the specific queue
+                int currentQueueIndex = 0;
+                while (!temp->stackOfQueues.empty()) {
+                    queue<int> currentQueue = temp->stackOfQueues.top();
+                    temp->stackOfQueues.pop();
+
+                    if (currentQueueIndex != queueIndex) {
+                        tempStack.push(currentQueue);
+                    }
+                    currentQueueIndex++;
+                }
+
+                // Rebuild stack without the deleted queue
+                while (!tempStack.empty()) {
+                    temp->stackOfQueues.push(tempStack.top());
+                    tempStack.pop();
+                }
+
+                cout << "Queue deleted from node " << nodeIndex << endl;
+            } else {
+                cout << "Queue index not found in node " << nodeIndex << endl;
             }
         } else {
-            patientQueue.push(newPatient);
+            cout << "Node " << nodeIndex << " not found.\n";
         }
     }
 
-    void updatePatientInfo(const string& name, const string& newCondition) {
-        queue<Patient> tempQueue;
-        bool found = false;
-        
-        while (!patientQueue.empty()) {
-            Patient currentPatient = patientQueue.front();
-            patientQueue.pop();
-            if (currentPatient.name == name) {
-                currentPatient.condition = newCondition;
-                currentPatient.priority = derivePriority(newCondition);
-                found = true;
+    // Sort all queues in ascending order (values inside queues)
+    void sortQueues() {
+        Node* temp = head;
+        while (temp) {
+            stack<queue<int> > sortedStack;
+            vector<queue<int> > queues;
+
+            // Move all queues into a vector for sorting
+            while (!temp->stackOfQueues.empty()) {
+                queues.push_back(temp->stackOfQueues.top());
+                temp->stackOfQueues.pop();
             }
-            tempQueue.push(currentPatient);
+
+            // Sort queues based on the first element
+            sort(queues.begin(), queues.end(), compareQueues);
+
+            // Push sorted queues back into the stack
+            for (int i = 0; i < queues.size(); ++i) {
+                temp->stackOfQueues.push(queues[i]);
+            }
+
+            temp = temp->next;
         }
 
-        while (!tempQueue.empty()) {
-            patientQueue.push(tempQueue.front());
-            tempQueue.pop();
-        }
-
-        if (!found) {
-            throw IncompleteInformationException();
-        }
+        cout << "Queues sorted in ascending order.\n";
     }
 
-    void viewCurrentQueue() {
-        queue<Patient> tempQueue = patientQueue;
-        cout << "Current Patient Queue:\n";
-        while (!tempQueue.empty()) {
-            Patient currentPatient = tempQueue.front();
-            tempQueue.pop();
-            cout << "Name: " << currentPatient.name 
-                 << ", Age: " << currentPatient.age 
-                 << ", Condition: " << currentPatient.condition 
-                 << ", Priority: " << currentPatient.priority << endl;
+    // Sort all stacks in ascending order (based on the front of the queues in the stack)
+    void sortStacks() {
+        Node* temp = head;
+        while (temp) {
+            stack<queue<int> > sortedStack;
+            vector<queue<int> > queues;
+
+            // Move all queues into a vector
+            while (!temp->stackOfQueues.empty()) {
+                queues.push_back(temp->stackOfQueues.top());
+                temp->stackOfQueues.pop();
+            }
+
+            // Sort queues inside stack based on the front element
+            sort(queues.begin(), queues.end(), compareQueues);
+
+            // Push sorted queues back into the stack
+            for (int i = 0; i < queues.size(); ++i) {
+                temp->stackOfQueues.push(queues[i]);
+            }
+
+            temp = temp->next;
         }
+
+        cout << "Stacks sorted in ascending order.\n";
     }
 
-    void prioritizePatients() {
-        vector<Patient> patients;
-        while (!patientQueue.empty()) {
-            patients.push_back(patientQueue.front());
-            patientQueue.pop();
+    // Sort nodes based on the top element of the stack
+    void sortNodes() {
+        vector<Node*> nodes;
+        Node* temp = head;
+
+        // Move all nodes into a vector
+        while (temp) {
+            nodes.push_back(temp);
+            temp = temp->next;
         }
 
-        // Sorting patients based on priority using the comparePriority function
-        sort(patients.begin(), patients.end(), comparePriority);
+        // Sort nodes based on the top element of the stack
+        sort(nodes.begin(), nodes.end(), compareNodes);
 
-        for (const auto& patient : patients) {
-            patientQueue.push(patient); // Re-enqueue in prioritized order
+        // Rebuild the linked list from the sorted nodes
+        head = nodes[0];
+        temp = head;
+        for (size_t i = 1; i < nodes.size(); ++i) {
+            temp->next = nodes[i];
+            temp = temp->next;
+        }
+        temp->next = nullptr;
+
+        cout << "Nodes sorted based on the top element of the stack.\n";
+    }
+
+    // Display the linked list
+    void display() {
+        Node* temp = head;
+        int nodeIndex = 0;
+        while (temp) {
+            cout << "Node " << nodeIndex++ << ":\n";
+            stack<queue<int> > tempStack = temp->stackOfQueues;
+            int queueIndex = 0;
+            while (!tempStack.empty()) {
+                cout << "  Queue " << queueIndex++ << ": ";
+                queue<int> q = tempStack.top();
+                tempStack.pop();
+                while (!q.empty()) {
+                    cout << q.front() << " ";
+                    q.pop();
+                }
+                cout << endl;
+            }
+            temp = temp->next;
         }
     }
 };
 
 int main() {
-    HospitalOPD opd;
-    int choice;
-    string name, condition;
-    int age;
+    LinkedList list;
 
-    do {
-        cout << "\nHospital OPD System Menu:\n";
-        cout << "1. Enqueue Patient\n";
-        cout << "2. Update Patient Info\n";
-        cout << "3. View Current Queue\n";
-        cout << "4. Prioritize Patients\n";
-        cout << "5. Exit\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
+    // Example Operations
+    list.insertNode();  // Insert first node
+    list.insertNode();  // Insert second node
+    list.insertQueueToNode(0);  // Insert a queue into node 0
+    list.insertQueueToNode(1);  // Insert a queue into node 1
+    list.display();
 
-        switch (choice) {
-            case 1:
-                try {
-                    cout << "Enter Patient Name: ";
-                    cin >> name;
-                    cout << "Enter Patient Age: ";
-                    cin >> age;
-                    cout << "Enter Patient Condition (Normal/Critical/Intense): ";
-                    cin >> condition;
-                    opd.enqueuePatient(name, age, condition);
-                    cout << "Patient Enqueued Successfully!\n";
-                } catch (const runtime_error& e) {
-                    cout << e.what() << endl;
-                }
-                break;
+    list.sortQueues();  // Sort queues inside nodes
+    list.display();
 
-            case 2:
-                try {
-                    cout << "Enter Patient Name to Update: ";
-                    cin >> name;
-                    cout << "Enter New Condition: ";
-                    cin >> condition;
-                    opd.updatePatientInfo(name, condition);
-                    cout << "Patient Info Updated Successfully!\n";
-                } catch (const runtime_error& e) {
-                    cout << e.what() << endl;
-                }
-                break;
+    list.sortStacks();  // Sort stacks inside nodes
+    list.display();
 
-            case 3:
-                opd.viewCurrentQueue();
-                break;
+    list.sortNodes();  // Sort nodes based on top of the stack
+    list.display();
 
-            case 4:
-                opd.prioritizePatients();
-                cout << "Patients Prioritized Successfully!\n";
-                break;
-
-            case 5:
-                cout << "Exiting...\n";
-                break;
-
-            default:
-                cout << "Invalid choice, please try again.\n";
-        }
-    } while (choice != 5);
+    list.deleteNode(0);  // Delete node at index 0
+    list.display();
 
     return 0;
 }
