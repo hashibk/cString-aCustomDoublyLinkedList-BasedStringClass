@@ -1,123 +1,138 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <set>
+
 using namespace std;
 
-class Node {
+struct Node {
     int data;
-    Node *next;
+    Node* left;
+    Node* right;
+    Node* up;
+    Node* down;
 
-public:
-    Node(int d) {
-        data = d;
-        next = nullptr;
-    }
-
-    friend class LinkedList; // Grant access to LinkedList class
+    Node(int val) : data(val), left(nullptr), right(nullptr), up(nullptr), down(nullptr) {}
 };
 
-class LinkedList {
-    Node *head;
+int ClueRow(int data, int totalRows) {
+    int sum = 0;
+    while (data) {
+        sum += data % 10;
+        data /= 10;
+    }
+    return (sum % totalRows) + 1;
+}
 
-public:
-    LinkedList() {
-        head = nullptr;
+int ClueColumn(int data) {
+    int digits = 0;
+    while (data) {
+        digits++;
+        data /= 10;
+    }
+    return digits;
+}
+
+vector<vector<Node*> > Read(const string& filename) {
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Error opening file!" << endl;
+        exit(1);
     }
 
-    void insert(int d) {
-        Node *newNode = new Node(d);
-        if (head == nullptr) {
-            head = newNode;
-        } else {
-            Node *temp = head;
-            while (temp->next) {
-                temp = temp->next;
-            }
-            temp->next = newNode;
+    vector<vector<Node*> > maze;
+    string line;
+
+    while (getline(file, line)) {
+        vector<Node*> row;
+        stringstream ss(line);
+        string value;
+        while (getline(ss, value, ',')) {
+            int nodeData = stoi(value);
+            row.push_back(new Node(nodeData));
+        }
+        maze.push_back(row);
+    }
+
+    int numRows = maze.size();
+    int numCols = maze[0].size();
+
+    for (int i = 0; i < numRows; ++i) {
+        for (int j = 0; j < numCols; ++j) {
+            if (j > 0) maze[i][j]->left = maze[i][j - 1];
+            if (j < numCols - 1) maze[i][j]->right = maze[i][j + 1];
+            if (i > 0) maze[i][j]->up = maze[i - 1][j];
+            if (i < numRows - 1) maze[i][j]->down = maze[i + 1][j];
         }
     }
+    return maze;
+}
 
-    void print() {
-        Node *temp = head;
-        while (temp) {
-            cout << temp->data << " ";
-            temp = temp->next;
-        }
-        cout << endl;
-    }
+void Traverse(Node* start, int totalRows, int totalCols) {
+    set<Node*> visited;
+    Node* current = start;
 
-    // Function to return the length of the linked list
-    int getLength() {
-        int length = 0;
-        Node *temp = head;
-        while (temp) {
-            length++;
-            temp = temp->next;
-        }
-        return length;
-    }
+    while (current) {
+        cout << "Visiting node with data: " << current->data << endl;
 
-    void swapNodes(int index) {
-        int length = getLength(); // Get the length of the linked list
-
-        // Check if the list is empty or if the index is invalid (out of bounds)
-        if (head == nullptr || index < 1 || index > length) {
-            cout << "Invalid index: " << index << ". Valid range is 1 to " << length << "." << endl;
+        if (visited.count(current)) {
+            cout << "Node revisited, ending traversal." << endl;
+            cout<<"Elite Node= "<<current->data<<endl;
             return;
         }
 
-        Node *prevX = nullptr, *currX = head;
-        Node *prevHead = nullptr; // Previous node for head
-        Node *currHead = head;
+        visited.insert(current);
 
-        // Traverse to the specified index (adjusting for 1-based index)
-        for (int i = 1; currX && i < index; i++) {
-            prevX = currX;
-            currX = currX->next;
+        int nextRow = ClueRow(current->data, totalRows) - 1;
+        int nextCol = ClueColumn(current->data) - 1;
+
+        cout << "Clue gives row: " << nextRow << " and column: " << nextCol << endl;
+
+        if (nextRow < 0 || nextRow >= totalRows || nextCol < 0 || nextCol >= totalCols) {
+            cout << "Invalid clue, ending traversal." << endl;
+            return;
         }
 
-        // If index is out of bounds or if the x-th node is not found
-        if (currX == nullptr) return;
+        // Move to the next node based on the clue
+        Node* nextNode = nullptr;
 
-        // Check if the x-th node's data is greater than head's data
-        if (currX->data > head->data) {
-            // If the x-th node is the head node, do nothing
-            if (currX == head) return;
-
-            // Swap the nodes
-            if (prevX) {
-                prevX->next = currHead; // Previous x points to head
-            }
-
-            // Update the next pointers
-            Node* tempNext = currX->next; // Store the next node of x-th node
-            currX->next = currHead->next; // Point x-th node to head's next
-            currHead->next = tempNext; // Point head to x-th node's next
-
-            // Now set the head to the x-th node
-            head = currX; // Update head to point to the x-th node
+        if (nextRow < (current - start) / totalCols && current->up) {
+            cout << "Moving up." << endl;
+            nextNode = current->up;
+        } else if (nextRow > (current - start) / totalCols && current->down) {
+            cout << "Moving down." << endl;
+            nextNode = current->down;
+        } else if (nextCol < (current - start) % totalCols && current->left) {
+            cout << "Moving left." << endl;
+            nextNode = current->left;
+        } else if (nextCol > (current - start) % totalCols && current->right) {
+            cout << "Moving right." << endl;
+            nextNode = current->right;
+        } else {
+            cout << "No valid move, ending traversal." << endl;
+            return;
         }
+
+        current = nextNode;
     }
-};
+}
 
 int main() {
-    LinkedList ll;
-    ll.insert(16);
-    ll.insert(45);
-    ll.insert(34);
-    ll.insert(22);
-    ll.insert(73);
-    ll.insert(91);
-    ll.print(); // Initial list
+    string filename = "maze.txt";
+    vector<vector<Node*> > maze = Read(filename);
 
-    int x;
-    cout << "Enter index (-1 to exit): ";
-    cin >> x;
-
-    while (x != -1) {
-        ll.swapNodes(x);
-        ll.print(); // Print the list after potential swaps
-        cout << "Enter index (-1 to exit): ";
-        cin >> x;
+    if (maze.empty() || maze[0].empty()) {
+        cerr << "Error: Maze structure is invalid!" << endl;
+        return 1;
     }
+
+    int totalRows = maze.size();
+    int totalCols = maze[0].size();
+
+    Node* start = maze[0][0];
+
+    Traverse(start, totalRows, totalCols);
 
     return 0;
 }
