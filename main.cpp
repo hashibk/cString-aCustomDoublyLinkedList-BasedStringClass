@@ -1,5 +1,5 @@
 #include <iostream>
-#include <unordered_map>
+#include <vector>
 #include <queue>
 using namespace std;
 
@@ -41,52 +41,44 @@ TreeNode* buildTree() {
     return root;
 }
 
-// Map each node to its parent
-void mapParents(TreeNode* root, unordered_map<int, int>& parent) {
-    if (!root) return;
+// Greedy DFS function to minimize cameras
+int dfs(TreeNode* node, int& cameras) {
+    if (!node) return 1; // Null nodes are already covered
 
-    queue<TreeNode*> q;
-    q.push(root);
+    int left = dfs(node->left, cameras);
+    int right = dfs(node->right, cameras);
 
-    while (!q.empty()) {
-        TreeNode* curr = q.front();
-        q.pop();
-
-        if (curr->left) {
-            parent[curr->left->val] = curr->val;
-            q.push(curr->left);
-        }
-        if (curr->right) {
-            parent[curr->right->val] = curr->val;
-            q.push(curr->right);
-        }
+    // If either child is not covered, place a camera here
+    if (left == 0 || right == 0) {
+        cameras++;
+        return 2; // This node now has a camera
     }
+
+    // If either child has a camera, this node is covered
+    if (left == 2 || right == 2) {
+        return 1; // This node is covered
+    }
+
+    // Otherwise, this node is not covered
+    return 0; // This node needs a camera
 }
 
-// Get the k-th ancestor of a node
-int getKthAncestor(int node, int k, unordered_map<int, int>& parent) {
-    while (k > 0 && parent.find(node) != parent.end()) {
-        node = parent[node];
-        k--;
+// Function to find the minimum number of cameras
+int minCameraCover(TreeNode* root) {
+    int cameras = 0;
+    if (dfs(root, cameras) == 0) {
+        cameras++; // If root is not covered, place a camera at the root
     }
-    return (k == 0) ? node : -1;
+    return cameras;
 }
 
 int main() {
     // Build the binary tree
     TreeNode* root = buildTree();
 
-    // Map each node to its parent
-    unordered_map<int, int> parent;
-    mapParents(root, parent);
-
-    // Process queries
-    int node, k;
-    cout << "Enter node and k: ";
-    cin >> node >> k;
-
-    int result = getKthAncestor(node, k, parent);
-    cout << "The " << k << "-th ancestor of node " << node << " is: " << result << endl;
+    // Find the minimum number of cameras
+    int result = minCameraCover(root);
+    cout << "Minimum cameras needed: " << result << endl;
 
     return 0;
 }
