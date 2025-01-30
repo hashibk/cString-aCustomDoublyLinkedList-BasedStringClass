@@ -1,279 +1,114 @@
 #include <iostream>
+#include <vector>
 #include <stack>
 #include <queue>
-#include <vector>
-#include <algorithm>
+#include <fstream>
+#include <sstream>
+
 using namespace std;
 
-// Node structure for Linked List
-struct Node {
-    stack<queue<int> > stackOfQueues;  // Stack of Queues
-    Node* next;
+struct Person {
+    char gender;
+    string orientation;
 
-    Node() : next(nullptr) {}  // Default constructor
+    Person(char g = '\0', string o = "") : gender(g), orientation(o) {}
 };
 
-// Comparison function for sorting queues
-bool compareQueues(const queue<int>& q1, const queue<int>& q2) {
-    return q1.front() < q2.front();  // Compare by the first element of the queue
+bool isValid(vector<vector<Person> >& matrix, int x, int y, Person& current, int rows, int cols) {
+    int dx[] = {-1, 1, 0, 0}; // Directions: up, down, left, right
+    int dy[] = {0, 0, -1, 1};
+
+    for (int i = 0; i < 4; i++) {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+        if (nx >= 0 && nx < rows && ny >= 0 && ny < cols) {
+            if (matrix[nx][ny].gender == current.gender &&
+                matrix[nx][ny].orientation == current.orientation) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
-// Comparison function for sorting nodes
-bool compareNodes(Node* n1, Node* n2) {
-    if (!n1->stackOfQueues.empty() && !n2->stackOfQueues.empty()) {
-        return n1->stackOfQueues.top().front() < n2->stackOfQueues.top().front();
+bool arrangePeople(vector<vector<Person> >& matrix, stack<pair<int, int> >& placements, queue<Person>& people, int rows, int cols) {
+    if (people.empty()) return true;
+
+    Person current = people.front();
+    people.pop();
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (matrix[i][j].gender == '\0' && isValid(matrix, i, j, current, rows, cols)) {
+                matrix[i][j] = current;
+                placements.push(make_pair(i, j));
+
+                if (arrangePeople(matrix, placements, people, rows, cols)) {
+                    return true;
+                }
+
+                matrix[i][j] = Person();
+                placements.pop();
+            }
+        }
     }
+
+    people.push(current);
     return false;
 }
 
-// Linked List class to handle nodes
-class LinkedList {
-private:
-    Node* head;
-
-public:
-    LinkedList() : head(nullptr) {}
-
-    // Insert a new Node at the end of the Linked List
-    void insertNode() {
-        Node* newNode = new Node();
-        if (!head) {
-            head = newNode;
-        } else {
-            Node* temp = head;
-            while (temp->next) {
-                temp = temp->next;
-            }
-            temp->next = newNode;
-        }
-    }
-
-    // Insert a queue into a specific node's stack
-    void insertQueueToNode(int nodeIndex) {
-        Node* temp = head;
-        int count = 0;
-
-        // Traverse to the specific node
-        while (temp && count < nodeIndex) {
-            temp = temp->next;
-            count++;
-        }
-
-        if (temp) {
-            queue<int> newQueue;
-            int val;
-            cout << "Enter values for the queue (enter -1 to end): ";
-            while (true) {
-                cin >> val;
-                if (val == -1) break;
-                newQueue.push(val);
-            }
-
-            temp->stackOfQueues.push(newQueue);
-            cout << "Queue added to node " << nodeIndex << endl;
-        } else {
-            cout << "Node " << nodeIndex << " not found.\n";
-        }
-    }
-
-    // Delete a node from the linked list
-    void deleteNode(int nodeIndex) {
-        if (!head) {
-            cout << "List is empty.\n";
-            return;
-        }
-
-        Node* temp = head;
-        if (nodeIndex == 0) {
-            head = temp->next;
-            delete temp;
-            cout << "Node deleted at index " << nodeIndex << endl;
-            return;
-        }
-
-        int count = 0;
-        Node* prev = nullptr;
-        while (temp && count < nodeIndex) {
-            prev = temp;
-            temp = temp->next;
-            count++;
-        }
-
-        if (temp) {
-            prev->next = temp->next;
-            delete temp;
-            cout << "Node deleted at index " << nodeIndex << endl;
-        } else {
-            cout << "Node " << nodeIndex << " not found.\n";
-        }
-    }
-
-    // Delete a queue from a specific node's stack
-    void deleteQueueFromNode(int nodeIndex, int queueIndex) {
-        Node* temp = head;
-        int count = 0;
-
-        // Traverse to the specific node
-        while (temp && count < nodeIndex) {
-            temp = temp->next;
-            count++;
-        }
-
-        if (temp) {
-            if (queueIndex < temp->stackOfQueues.size()) {
-                stack<queue<int> > tempStack;
-
-                // Pop all elements until we reach the specific queue
-                int currentQueueIndex = 0;
-                while (!temp->stackOfQueues.empty()) {
-                    queue<int> currentQueue = temp->stackOfQueues.top();
-                    temp->stackOfQueues.pop();
-
-                    if (currentQueueIndex != queueIndex) {
-                        tempStack.push(currentQueue);
-                    }
-                    currentQueueIndex++;
-                }
-
-                // Rebuild stack without the deleted queue
-                while (!tempStack.empty()) {
-                    temp->stackOfQueues.push(tempStack.top());
-                    tempStack.pop();
-                }
-
-                cout << "Queue deleted from node " << nodeIndex << endl;
-            } else {
-                cout << "Queue index not found in node " << nodeIndex << endl;
-            }
-        } else {
-            cout << "Node " << nodeIndex << " not found.\n";
-        }
-    }
-
-    // Sort all queues in ascending order (values inside queues)
-    void sortQueues() {
-        Node* temp = head;
-        while (temp) {
-            stack<queue<int> > sortedStack;
-            vector<queue<int> > queues;
-
-            // Move all queues into a vector for sorting
-            while (!temp->stackOfQueues.empty()) {
-                queues.push_back(temp->stackOfQueues.top());
-                temp->stackOfQueues.pop();
-            }
-
-            // Sort queues based on the first element
-            sort(queues.begin(), queues.end(), compareQueues);
-
-            // Push sorted queues back into the stack
-            for (int i = 0; i < queues.size(); ++i) {
-                temp->stackOfQueues.push(queues[i]);
-            }
-
-            temp = temp->next;
-        }
-
-        cout << "Queues sorted in ascending order.\n";
-    }
-
-    // Sort all stacks in ascending order (based on the front of the queues in the stack)
-    void sortStacks() {
-        Node* temp = head;
-        while (temp) {
-            stack<queue<int> > sortedStack;
-            vector<queue<int> > queues;
-
-            // Move all queues into a vector
-            while (!temp->stackOfQueues.empty()) {
-                queues.push_back(temp->stackOfQueues.top());
-                temp->stackOfQueues.pop();
-            }
-
-            // Sort queues inside stack based on the front element
-            sort(queues.begin(), queues.end(), compareQueues);
-
-            // Push sorted queues back into the stack
-            for (int i = 0; i < queues.size(); ++i) {
-                temp->stackOfQueues.push(queues[i]);
-            }
-
-            temp = temp->next;
-        }
-
-        cout << "Stacks sorted in ascending order.\n";
-    }
-
-    // Sort nodes based on the top element of the stack
-    void sortNodes() {
-        vector<Node*> nodes;
-        Node* temp = head;
-
-        // Move all nodes into a vector
-        while (temp) {
-            nodes.push_back(temp);
-            temp = temp->next;
-        }
-
-        // Sort nodes based on the top element of the stack
-        sort(nodes.begin(), nodes.end(), compareNodes);
-
-        // Rebuild the linked list from the sorted nodes
-        head = nodes[0];
-        temp = head;
-        for (size_t i = 1; i < nodes.size(); ++i) {
-            temp->next = nodes[i];
-            temp = temp->next;
-        }
-        temp->next = nullptr;
-
-        cout << "Nodes sorted based on the top element of the stack.\n";
-    }
-
-    // Display the linked list
-    void display() {
-        Node* temp = head;
-        int nodeIndex = 0;
-        while (temp) {
-            cout << "Node " << nodeIndex++ << ":\n";
-            stack<queue<int> > tempStack = temp->stackOfQueues;
-            int queueIndex = 0;
-            while (!tempStack.empty()) {
-                cout << "  Queue " << queueIndex++ << ": ";
-                queue<int> q = tempStack.top();
-                tempStack.pop();
-                while (!q.empty()) {
-                    cout << q.front() << " ";
-                    q.pop();
-                }
-                cout << endl;
-            }
-            temp = temp->next;
-        }
-    }
-};
-
 int main() {
-    LinkedList list;
+    ifstream file("people.txt");
+    string line;
+    getline(file, line);
+    file.close();
 
-    // Example Operations
-    list.insertNode();  // Insert first node
-    list.insertNode();  // Insert second node
-    list.insertQueueToNode(0);  // Insert a queue into node 0
-    list.insertQueueToNode(1);  // Insert a queue into node 1
-    list.display();
+    vector<Person> peopleList;
+    stringstream ss(line);
+    string token;
 
-    list.sortQueues();  // Sort queues inside nodes
-    list.display();
+    string orientations[] = {"left", "right", "front", "back"};
+    int orientationIndex = 0;
 
-    list.sortStacks();  // Sort stacks inside nodes
-    list.display();
+    while (getline(ss, token, ',')) {
+        char gender = token[0];
+        string orientation = orientations[orientationIndex % 4];
+        peopleList.push_back(Person(gender, orientation));
+        orientationIndex++;
+    }
 
-    list.sortNodes();  // Sort nodes based on top of the stack
-    list.display();
+    int rows, cols;
+    cout << "Enter matrix dimensions (rows cols): ";
+    cin >> rows >> cols;
 
-    list.deleteNode(0);  // Delete node at index 0
-    list.display();
+    if (rows * cols > peopleList.size()) {
+        cout << "Not enough people to fill the matrix!" << endl;
+        return 0;
+    }
+
+    vector<vector<Person> > matrix(rows, vector<Person>(cols, Person()));
+    stack<pair<int, int> > placements;
+    queue<Person> people;
+
+    for (int i = 0; i < rows * cols; i++) {
+        people.push(peopleList[i]);
+    }
+
+    if (arrangePeople(matrix, placements, people, rows, cols)) {
+        cout << "Arranged Matrix:" << endl;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (matrix[i][j].gender != '\0') {
+                    cout << matrix[i][j].gender << matrix[i][j].orientation[0] << " ";
+                } else {
+                    cout << "XX ";
+                }
+            }
+            cout << endl;
+        }
+    } else {
+        cout << "No possible arrangement found." << endl;
+    }
 
     return 0;
 }

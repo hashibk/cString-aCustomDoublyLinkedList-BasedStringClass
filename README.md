@@ -1,38 +1,32 @@
-# Linked List with Stacks of Queues
+# Matrix Arrangement of People (Backtracking)
 
 ## Description
-This project demonstrates a custom implementation of a linked list that manages nodes, each containing a stack of queues. The program allows you to insert nodes, add queues to nodes, delete nodes and queues, and sort the queues, stacks, and nodes in various ways.
+This C++ program arranges people (represented by gender and orientation) into a matrix with user-defined dimensions. The goal is to arrange them such that no two adjacent people (up, down, left, or right) have the same gender and orientation. The program uses backtracking to attempt placing people into the matrix.
 
 ### Operations Supported:
-1. **Insert Node** - Adds a new node at the end of the linked list.
-2. **Insert Queue to Node** - Adds a new queue to a specified node's stack.
-3. **Delete Node** - Deletes a node from the linked list by its index.
-4. **Delete Queue from Node** - Removes a specific queue from a node's stack.
-5. **Sort Queues** - Sorts all queues in ascending order based on their front element.
-6. **Sort Stacks** - Sorts all stacks inside nodes based on the front element of the queues within the stack.
-7. **Sort Nodes** - Sorts nodes based on the top element of the stack in each node.
-8. **Display** - Displays the linked list along with the stacks and queues in each node.
+- **Input:** Reads people data from a file (`people.txt`) containing a comma-separated list of genders.
+- **Arrange People:** Attempts to arrange people in a matrix ensuring no adjacent people have the same gender and orientation.
+- **Output:** Displays the arranged matrix if a valid configuration is found.
 
 ## Technologies Used:
-- C++ (Standard Library)
+- **C++** - For implementing the backtracking algorithm and data structures.
 
 ## How to Use:
-1. **Clone the repository**:
+1. **Prepare Input File (`people.txt`):**
+   - The file should contain a comma-separated list of gender characters (e.g., `M,F,M,F,F,M,M,F,M`).
+   - Orientations are assigned cyclically from the list `["left", "right", "front", "back"]`.
+   
+2. **Compile the Program:**
    ```bash
-   git clone <repository-url>
-   cd <repository-folder>
-Compile and run:
-g++ -o linked_list_with_stacks_of_queues main.cpp
-./linked_list_with_stacks_of_queues
-Interact with the program: Follow the prompts in the program to insert nodes, add queues, delete nodes or queues, and perform sorting operations.
+   g++ -o matrix_arrangement main.cpp
+   ./matrix_arrangement
+Run the Program:
+When prompted, enter the matrix dimensions (rows and columns).
+The program will attempt to arrange the people and display the result.
 Example:
 
-Insert first node
-Insert second node
-Insert a queue into node 0
-Insert a queue into node 1
-Display the list
-Sort queues inside nodes
-Sort stacks inside nodes
-Sort nodes based on top of stack
-Delete node at index 0
+Enter matrix dimensions (rows cols): 3 3
+Arranged Matrix:
+Mlf Mfr Mbf 
+Mrf Fbl Fbr 
+Ffl Mlf Ffr
