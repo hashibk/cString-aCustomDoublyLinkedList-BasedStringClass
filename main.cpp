@@ -1,84 +1,51 @@
 #include <iostream>
-#include <vector>
-#include <queue>
 using namespace std;
+int *InputFunction(int x){
+    int *arr=new int [x];
+    for (int i=0;i<x;i++){
+        cout<<"Enter array element= "<<endl;
+        cin>>arr[i];
+    }
+    return arr;
+}
 
-// Node structure for the binary tree
-struct TreeNode {
-    int val;
-    TreeNode* left;
-    TreeNode* right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
-
-// Build the binary tree from level-order input
-TreeNode* buildTree() {
-    cout << "Enter node values for level-order traversal (-1 for null): ";
-    int val;
-    cin >> val;
-    if (val == -1) return NULL;
-
-    TreeNode* root = new TreeNode(val);
-    queue<TreeNode*> q;
-    q.push(root);
-
-    while (!q.empty()) {
-        TreeNode* curr = q.front();
-        q.pop();
-
-        cin >> val;
-        if (val != -1) {
-            curr->left = new TreeNode(val);
-            q.push(curr->left);
-        }
-
-        cin >> val;
-        if (val != -1) {
-            curr->right = new TreeNode(val);
-            q.push(curr->right);
+int *DeleteFunction(int *arr, int delnum , int x,int &newsize){
+    int count=0;
+    for (int i=0;i<x;i++){
+        if (arr[i]==delnum){
+            count++;
         }
     }
-    return root;
+    newsize=x-count;
+    int *arr2=new int [newsize];
+    int a=0;
+    int b=0;
+    do{
+        if (arr[a]!=delnum){
+            arr2[b]=arr[a];
+            a++;
+            b++;
+        }
+        else{
+            a++;
+        }
+    }
+    while (a<x && b<newsize);
+    return arr2;
 }
 
-// Greedy DFS function to minimize cameras
-int dfs(TreeNode* node, int& cameras) {
-    if (!node) return 1; // Null nodes are already covered
-
-    int left = dfs(node->left, cameras);
-    int right = dfs(node->right, cameras);
-
-    // If either child is not covered, place a camera here
-    if (left == 0 || right == 0) {
-        cameras++;
-        return 2; // This node now has a camera
+int main(){
+    int size;
+    int del;
+    int newsize;
+    cout<<"Enter size of array= "<<endl;
+    cin>>size;
+    int *arr= InputFunction(size);
+    cout<<"Enter element that you want to delete= "<<endl;
+    cin>>del;
+    int *arr2= DeleteFunction(arr,del,size,newsize);
+    for (int i=0;i<newsize;i++){
+        cout<<arr2[i]<<" ";
     }
-
-    // If either child has a camera, this node is covered
-    if (left == 2 || right == 2) {
-        return 1; // This node is covered
-    }
-
-    // Otherwise, this node is not covered
-    return 0; // This node needs a camera
-}
-
-// Function to find the minimum number of cameras
-int minCameraCover(TreeNode* root) {
-    int cameras = 0;
-    if (dfs(root, cameras) == 0) {
-        cameras++; // If root is not covered, place a camera at the root
-    }
-    return cameras;
-}
-
-int main() {
-    // Build the binary tree
-    TreeNode* root = buildTree();
-
-    // Find the minimum number of cameras
-    int result = minCameraCover(root);
-    cout << "Minimum cameras needed: " << result << endl;
-
-    return 0;
+    cout<<endl;
 }

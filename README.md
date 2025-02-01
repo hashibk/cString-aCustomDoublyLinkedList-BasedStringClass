@@ -1,31 +1,37 @@
-# Binary Tree Camera Coverage
+# Dynamic Array Element Deletion
 
-This C++ program solves the problem of finding the minimum number of cameras required to monitor all nodes in a binary tree. The solution uses a greedy depth-first search (DFS) approach to minimize the number of cameras while ensuring that every node in the tree is either directly covered by a camera or covered by a camera placed at one of its ancestors.
+## Description
+This C++ program dynamically allocates an array based on user input, allows the user to enter elements, and then removes all occurrences of a specified number from the array. The result is stored in a new dynamically allocated array with updated size.
 
 ## Features:
-- **Binary Tree Construction**: Build a binary tree from level-order input (`-1` for null nodes).
-- **Greedy DFS Algorithm**: The program applies a greedy DFS approach to calculate the minimum number of cameras needed.
-- **Efficient Solution**: Optimized for minimizing the number of cameras while ensuring every node is covered.
+- **Dynamic Memory Allocation**: Uses `new` to allocate memory for arrays.
+- **User Input Handling**: Takes input for array elements and the element to be deleted.
+- **Efficient Element Deletion**: Iterates through the array and removes all instances of the specified number.
+- **Memory Management**: Uses a new dynamically allocated array to store the updated result.
 
 ## How It Works:
-1. **Tree Construction**: The binary tree is constructed based on user input where `-1` represents a null node.
-2. **Greedy DFS**: The DFS function traverses the tree. It places cameras in nodes where necessary to cover all descendants.
-   - If a child node is uncovered, a camera is placed at the current node.
-   - If a child node has a camera, the current node is considered covered.
-3. **Camera Calculation**: After the DFS traversal, the program returns the minimum number of cameras required to monitor the entire tree.
+1. **Array Creation**: The user specifies the size of the array and inputs elements.
+2. **Deletion Process**: The program removes all occurrences of the given element.
+3. **Output the Updated Array**: The new array is printed without the deleted element.
 
 ## Usage:
-1. **Input**: 
-   - The user is asked to provide the level-order traversal of the tree, using `-1` to represent null nodes.
-   
-2. **Output**: 
-   - The program outputs the minimum number of cameras needed to cover all nodes.
 
-## Example:
+### **Example Input:**
+Enter size of array=
+5
+Enter array element=
+1
+Enter array element=
+2
+Enter array element=
+3
+Enter array element=
+2
+Enter array element=
+4
+Enter element that you want to delete=
+2
 
-### Input:
-Enter node values for level-order traversal (-1 for null): 1 2 3 4 5 -1 -1
 
-
-### Output:
-Minimum cameras needed: 2
+### **Example Output:**
+1 3 4
