@@ -1,37 +1,31 @@
-# Dynamic Array Element Deletion
+# Subarray Sum Analysis
 
 ## Description
-This C++ program dynamically allocates an array based on user input, allows the user to enter elements, and then removes all occurrences of a specified number from the array. The result is stored in a new dynamically allocated array with updated size.
+This program generates all possible subarrays of an input array and calculates their sums. It then identifies and displays the subarray with the maximum sum.
 
 ## Features:
-- **Dynamic Memory Allocation**: Uses `new` to allocate memory for arrays.
-- **User Input Handling**: Takes input for array elements and the element to be deleted.
-- **Efficient Element Deletion**: Iterates through the array and removes all instances of the specified number.
-- **Memory Management**: Uses a new dynamically allocated array to store the updated result.
+- **Dynamic Memory Allocation**: Uses `new` to handle arrays dynamically.
+- **Subarray Computation**: Displays all possible subarrays along with their sums.
+- **Maximum Sum Subarray Identification**: Finds and prints the subarray with the highest sum.
+- **User-Friendly Input**: The user specifies the array size and elements.
 
 ## How It Works:
-1. **Array Creation**: The user specifies the size of the array and inputs elements.
-2. **Deletion Process**: The program removes all occurrences of the given element.
-3. **Output the Updated Array**: The new array is printed without the deleted element.
+1. **Array Input**: The user provides the array size and elements.
+2. **Subarray Generation**: The program calculates and prints all possible subarrays.
+3. **Sum Calculation**: The sum of each subarray is stored.
+4. **Find Maximum Sum Subarray**: The subarray with the largest sum is displayed.
 
 ## Usage:
 
 ### **Example Input:**
-Enter size of array=
-5
-Enter array element=
-1
-Enter array element=
-2
-Enter array element=
-3
-Enter array element=
-2
-Enter array element=
-4
-Enter element that you want to delete=
-2
+Enter size of array= 3 Enter array element= 1 Enter array element= 2 Enter array element= 3
 
 
 ### **Example Output:**
-1 3 4
+1
+1 2
+1 2 3
+2
+2 3
+3
+Subarray with maximum sum: 1 2 3
