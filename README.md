@@ -1,32 +1,38 @@
-# Pattern Finder in 2D Grid
+# Unique Set Finder
 
 ## Description
-This C++ program takes a 2D grid of characters and a word as input, and searches for the word in four directions:
-1. **Horizontally to the right**
-2. **Horizontally to the left**
-3. **Vertically down**
-4. **Diagonally down-left**
+The **Unique Set Finder** program allows the user to input an array of integers and then outputs the unique elements from that array. The program ensures that each element appears only once in the output. It can handle multiple datasets as requested by the user.
 
-The program outputs the position of the first character of the word where it is found in the grid for each direction.
+## Features
+- Accepts an array of integers from the user.
+- Extracts the unique elements from the array.
+- Displays the unique set of elements.
+- Allows the user to enter new datasets and display their unique sets multiple times.
 
-## Features:
-- **Grid Input**: The program allows the user to input the dimensions of a grid and populate it with characters.
-- **Word Search**: The program accepts a word and searches for it in four different directions in the grid.
-- **Pattern Display**: It prints the position where the word pattern is found in the grid in the specified directions.
+## Usage
 
-## How It Works:
-1. **Grid Input**: The program first prompts the user to input the number of rows and columns for the grid. Then, the user is asked to enter each character in the grid.
-2. **Word Input**: The user provides the word to search for in the grid.
-3. **Searching the Word**: The program searches for the word in four possible directions:
-   - Horizontally right
-   - Horizontally left
-   - Vertically down
-   - Diagonally down-left
-4. **Displaying Results**: For each direction, it outputs the row and column where the word starts.
+1. The program will first prompt you to enter the size of the array.
+2. Then, you will input the array elements.
+3. After processing, it will display the unique set of elements from the array.
+4. You will be asked whether you want to enter another array to process; input `1` to continue or `0` to stop.
 
-## Example Input:
-Enter number of rows= 5 Enter number of columns= 5 Enter array element= A Enter array element= B Enter array element= C Enter array element= D Enter array element= E Enter array element= F Enter array element= G Enter array element= H Enter array element= I Enter array element= J Enter array element= K Enter array element= L Enter array element= M Enter array element= N Enter array element= O Enter size of word= 3 Enter character= F Enter character= G Enter character= H
+## Example
+
+**Input:**
+Enter size of array: 5 Enter array elements: 1 2 2 3 3
 
 
-### **Step-by-Step Output:**
-Pattern found horizontally right at row= 1 and column= 0 Pattern found vertically up starting from row= 1 and column= 0 Pattern found diagonally left down starting from row 0 and column 2
+**Output:**
+Set: 1 2 3
+
+
+**Input:**
+Do you want to enter data again (enter 1 for yes)? 1
+
+
+**Next Input:**
+Enter size of array: 4 Enter array elements: 4 5 5 6
+
+
+**Output:**
+Set: 4 5 6
