@@ -1,112 +1,28 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
-
-class person{
-private:
-    string name;
-    int age;
-public:
-    person(){
-        name="";
-        age=0;
+void concate(char arr1[], int as, char arr2[], int bs, char* arr3)
+{
+int i,j=0;
+    for (i = 0; i < as-1; i++)
+    {
+        arr3[i] = arr1[i];
     }
-    
-    void setnameage(string n, int a){
-        name=n;
-        age=a;
+    arr3[i++] = ' ';
+    while (arr2[j] != '\0')
+    {
+        arr3[i++] = arr2[j++];
     }
-    
-    void getname(){
-        cout<<name;
-    }
-    
-    void getage(){
-        cout<<age;
-    }
-    
-    virtual void getdata(){}
-    virtual void putdata(){}
-    
-    ~person(){}
-    
-};
-
-class professor:public person{
-private:
-    int pblic;
-public:
-    professor(){
-        pblic=0;
-    }
-    
-    void getdata() override{
-        string a;
-        int b;
-        cout<<"Enter name= "<<endl;
-        cin>>a;
-        cout<<"Enter age= "<<endl;
-        cin>>b;
-        setnameage(a,b);
-        cout<<"Enter publications= "<<endl;
-        cin>>pblic;
-    }
-    
-    void putdata() override{
-        getname();
-        cout<<" ";
-        getage();
-        cout<<" ";
-        cout<<pblic<<" ";
-        cout<<"1"<<endl;
-    }
-};
-
-class student:public person{
-private:
-    int* marks;
-    int numsubs;
-public:
-    student(){
-        marks=nullptr;
-        numsubs=0;
-    }
-    
-    void getdata(int i){
-        string a;
-        int b;
-        cout<<"Enter name= "<<endl;
-        cin>>a;
-        cout<<"Enter age= "<<endl;
-        cin>>b;
-        setnameage(a,b);
-        cout<<"Enter number of subjects= "<<endl;
-        cin>>numsubs;
-        marks=new int[numsubs];
-        for (int i=0;i<numsubs;i++){
-            cout<<"Enter marks= "<<endl;
-            cin>>marks[i];
-        }
-    }
-    
-    void putdata() override {
-        int total=0;
-        getname();
-        cout<<" ";
-        getage();
-        cout<<" ";
-        for (int i=0;i!=numsubs;i++){
-            total+=marks[i];
-        }
-        cout<<total<<" ";
-        cout<<"2"<<endl;
-    }
-};
-
-int main(){
-    professor prof;
-    student stu;
-    prof.getdata();
-    prof.putdata();
-    stu.getdata(2);
-    stu.putdata();
+    arr3[i] = '\0';
+}
+int main()
+{
+    char arr1[] = "Hello";
+    char arr2[] = "World";
+    int as = sizeof(arr1);
+    int bs = sizeof(arr2);
+    //cout << as << " " << bs;
+    char *arr3 = new char[as + bs];
+    concate(arr1, as, arr2, bs, arr3);
+    for (int i = 0; arr3[i] != '\0'; i++)
+        cout << arr3[i];
 }
