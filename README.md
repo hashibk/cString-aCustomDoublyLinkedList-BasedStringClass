@@ -1,38 +1,40 @@
-# Unique Set Finder
+# Room Reservation System
 
 ## Description
-The **Unique Set Finder** program allows the user to input an array of integers and then outputs the unique elements from that array. The program ensures that each element appears only once in the output. It can handle multiple datasets as requested by the user.
+The **Room Reservation System** allows users to reserve rooms from a hotel that has both business and economy class rooms. The user can select the type of room (business or economy) and check availability. If a room is available, the user can reserve it, and the system updates the availability.
 
 ## Features
-- Accepts an array of integers from the user.
-- Extracts the unique elements from the array.
-- Displays the unique set of elements.
-- Allows the user to enter new datasets and display their unique sets multiple times.
+- Users can select between business class (1) or economy class (2).
+- The system checks availability of rooms in the selected class.
+- If rooms are available, users can reserve a room.
+- The updated room status is displayed after each reservation.
+- Users can continue to reserve rooms as long as they want.
 
 ## Usage
 
-1. The program will first prompt you to enter the size of the array.
-2. Then, you will input the array elements.
-3. After processing, it will display the unique set of elements from the array.
-4. You will be asked whether you want to enter another array to process; input `1` to continue or `0` to stop.
+1. Upon starting the program, the user will be prompted to choose between business class (1) or economy class (2).
+2. The system will display available rooms and ask if the user wants to reserve one.
+3. If a room is reserved, the system will display the updated room status.
+4. The user will be asked if they want to reserve another room.
+5. This process continues until the user decides to stop.
 
 ## Example
 
 **Input:**
-Enter size of array: 5 Enter array elements: 1 2 2 3 3
+Enter 1 for business class and 2 for economy class. 1 Room no. 0 is free on 0 floor, do you want to reserve it? Press 1 for yes. 1
 
 
 **Output:**
-Set: 1 2 3
-
-
-**Input:**
-Do you want to enter data again (enter 1 for yes)? 1
+Room no. 0 is reserved on 0 floor. Updated Room Status: 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 
 
 **Next Input:**
-Enter size of array: 4 Enter array elements: 4 5 5 6
+Do you want to reserve another room? Press 1 for yes. 1
+
+
+**Next Output:**
+Enter 1 for business class and 2 for economy class. 2 Room no. 0 is free on 2 floor, do you want to reserve it? Press 1 for yes. 1
 
 
 **Output:**
-Set: 4 5 6
+Room no. 0 is reserved on 2 floor. Updated Room Status: 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
