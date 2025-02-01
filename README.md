@@ -1,25 +1,24 @@
-# Maximum Subarray Sum Sorting
+# Merge Even-Odd Arrays
 
 ## Description
-This C++ program computes all possible subarrays from an input array, calculates the sum of each subarray, and then sorts the sums in descending order. The program dynamically allocates memory for input and output arrays.
+This C++ program merges two arrays by arranging all even numbers in the beginning and odd numbers at the end. It handles dynamic memory allocation and ensures the relative order of the even and odd numbers is maintained from both input arrays.
 
 ## Features:
-- **Dynamic Memory Allocation**: Memory for arrays is allocated using `new`.
-- **Subarray Sum Calculation**: Computes sums of all possible subarrays.
-- **Descending Sort**: Sorts the subarray sums in descending order.
-- **Display Results**: Displays the subarray sums before and after sorting.
+- **Merging**: Merges two input arrays into one.
+- **Even-Odd Sorting**: Even numbers appear first, followed by odd numbers.
+- **Dynamic Memory Allocation**: Memory for the merged array is dynamically allocated.
+- **Order Preservation**: The relative order of even and odd numbers from both input arrays is maintained.
 
 ## How It Works:
-1. **Array Input**: The user specifies the size and elements of the array.
-2. **Subarray Calculation**: The program computes all possible subarrays and their sums.
-3. **Sorting Process**: Subarray sums are sorted in descending order.
-4. **Display Sorted Sums**: The program prints the subarray sums before and after sorting.
+1. **Array Input**: The user provides two arrays with elements.
+2. **Merging Process**: The program combines the two arrays by first placing all even numbers from both arrays and then placing the odd numbers in reverse order.
+3. **Display Result**: The merged array is printed with even numbers first followed by odd numbers.
 
 ## Usage:
 
 ### **Example Input:**
-Enter size of array= 4 Enter array element= 1 Enter array element= 2 Enter array element= 3 Enter array element= 4
+Enter size of first array= 3 Enter size of second array= 3 Enter array element of first array= 2 Enter array element of first array= 1 Enter array element of first array= 4 Enter array element of second array= 3 Enter array element of second array= 6 Enter array element of second array= 5
 
 
 ### **Example Output:**
-1 1 2 1 2 3 1 2 3 4 10 6 6 5 5 4 4 3 3 1
+2 4 6 3 1 5

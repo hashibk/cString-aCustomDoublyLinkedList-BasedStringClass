@@ -1,82 +1,66 @@
 #include <iostream>
 using namespace std;
 
-int *InputArray(int &size){
-    int *arr=new int [size];
-    for (int i=0;i<size;i++){
-        cout<<"Enter array element= "<<endl;
-        cin>>arr[i];
-    }
-    return arr;
-}
-
-int *SubArrays (int &size, int arr[], int size2){
-    int *arr2=new int[size2];
-    int sum=0;
-    int count=0;
-    int a=0;
-    for (int i=0;i<size;i++){
-        for (int j=i;j<size;j++){
-            cout<<count<<". ";
-            for (int k=i;k<=j;k++){
-                cout<<arr[k]<<" ";
-                sum+=arr[k];
-            }
-            arr2[a]=sum;
-            a++;
-            sum=0;
-            count++;
-            cout<<endl;
+int *MIX(int a[],int b[],int size1,int size2){
+    int size3=size1+size2;
+    int *c=new int [size3];
+    int i=0;
+    //
+    int j=0;
+    //
+    int k=size3-1;
+    do {
+        if (a[i]%2==0){
+            c[j]=a[i];
+            i++;
+            j++;
+        }
+        else{
+            c[k]=a[i];
+            i++;
+            k--;
         }
     }
-    return arr2;
+    while (i<size1 && j<size3 && k>=0);
+    
+    int l=0;
+    do {
+        if (b[l]%2==0){
+            c[j]=b[l];
+            j++;
+            l++;
+        }
+        else{
+            c[k]=b[l];
+            l++;
+            k--;
+        }
+    }
+    while (l<size2 && j<size3 && k>=0);
+    return c;
 }
 
-void MaximumSum (int arr[], int arr2[], int size, int size2){
-    int count=0;
+int main(){
+    int size1, size2;
+    cout<<"Enter size of first array= "<<endl;
+    cin>>size1;
+    cout<<"Enter size of second array= "<<endl;
+    cin>>size2;
+    int *a=new int[size1];
+    int *b=new int[size2];
+    for (int i=0;i<size1;i++){
+        cout<<"Enter array element of first array= "<<endl;
+        cin>>a[i];
+    }
     for (int i=0;i<size2;i++){
-        for (int j=0;j<size2;j++){
-            if (arr2[i]==arr[j]){
-                for (int k=0;k<size;k++){
-                    for (int l=k;l<size;l++){
-                        if (count==j){
-                        }
-                    }
-                }
-            }
-        }
+        cout<<"Enter array element of second array= "<<endl;
+        cin>>b[i];
     }
+    
+    int *c=MIX(a,b,size1,size2);
+    
+    for (int i=0;i<size1+size2;i++){
+        cout<<c[i]<<" ";
+    }
+    cout<<endl;
 }
-void SortingArray (int size2, int arr2[]){
-    int max=0;
-    int temp=0;
-    for (int i=0;i<size2;i++){
-        for (int j=i+1;j<size2;j++){
-            if (arr2[j]>arr2[i]){
-                temp=arr2[i];
-                arr2[i]=arr2[j];
-                arr2[j]=temp;
-            }
-        }
-    }
-}
-
-    int main(){
-        int size;
-        cout<<"Enter size of array= "<<endl;
-        cin>>size;
-        int size2= size*(size+1)/2;
-        int *arr=InputArray(size);
-        int *arr2=SubArrays(size,arr,size2);
-        for (int i=0;i<size2;i++){
-            cout<<arr2[i]<<" ";
-        }
-        cout<<endl;
-        SortingArray(size2,arr2);
-        for (int i=0;i<size2;i++){
-            cout<<arr2[i]<<" ";
-        }
-        cout<<endl;
-    }
-
-
