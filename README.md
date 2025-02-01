@@ -1,31 +1,23 @@
-# Subarray Sum Analysis
+# Array Sorting by Even and Odd Elements
 
 ## Description
-This program generates all possible subarrays of an input array and calculates their sums. It then identifies and displays the subarray with the maximum sum.
+This C++ program sorts an input array such that all even elements appear first, followed by all odd elements. The relative order of the even and odd elements is maintained within their respective groups.
 
 ## Features:
 - **Dynamic Memory Allocation**: Uses `new` to handle arrays dynamically.
-- **Subarray Computation**: Displays all possible subarrays along with their sums.
-- **Maximum Sum Subarray Identification**: Finds and prints the subarray with the highest sum.
-- **User-Friendly Input**: The user specifies the array size and elements.
+- **Efficient Sorting**: Even elements are placed at the beginning and odd elements at the end while keeping their relative order.
+- **User Input**: The user specifies the array size and elements for sorting.
 
 ## How It Works:
-1. **Array Input**: The user provides the array size and elements.
-2. **Subarray Generation**: The program calculates and prints all possible subarrays.
-3. **Sum Calculation**: The sum of each subarray is stored.
-4. **Find Maximum Sum Subarray**: The subarray with the largest sum is displayed.
+1. **Array Input**: The user provides the size and elements of the array.
+2. **Sorting Process**: The program separates even and odd numbers and sorts them into a new array.
+3. **Display Sorted Array**: The sorted array (even numbers followed by odd numbers) is printed.
 
 ## Usage:
 
 ### **Example Input:**
-Enter size of array= 3 Enter array element= 1 Enter array element= 2 Enter array element= 3
+Enter size of array= 5 Enter array element= 4 Enter array element= 3 Enter array element= 7 Enter array element= 2 Enter array element= 1
 
 
 ### **Example Output:**
-1
-1 2
-1 2 3
-2
-2 3
-3
-Subarray with maximum sum: 1 2 3
+4 2 3 7 1
