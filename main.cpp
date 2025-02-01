@@ -1,52 +1,65 @@
 #include <iostream>
-#include <cstring> // For memset
+#include <algorithm> // For sorting
 using namespace std;
 
 int main() {
     int size;
-    cout << "Enter size of array: ";
+    cout << "Enter size of element: ";
     cin >> size;
 
     int *a = new int[size];
-    int *array = new int[size];
-    memset(array, 0, size * sizeof(int)); // Initialize array with 0s
+    int *b = new int[size];
+    int *c = new int[size];
 
-    // Input array
-    for (int i = 0; i < size; i++) {
-        cout << "Enter array element: ";
-        cin >> a[i];
-    }
+    // Input arrays
+    cout << "Enter elements of array 1: ";
+    for (int i = 0; i < size; i++) cin >> a[i];
 
-    // Bubble Sort (Ascending Order)
-    for (int i = 0; i < size - 1; i++) {
-        for (int j = 0; j < size - i - 1; j++) {
-            if (a[j] > a[j + 1]) {
-                swap(a[j], a[j + 1]);
-            }
+    cout << "Enter elements of array 2: ";
+    for (int i = 0; i < size; i++) cin >> b[i];
+
+    cout << "Enter elements of array 3: ";
+    for (int i = 0; i < size; i++) cin >> c[i];
+
+    // Sorting all three arrays
+    sort(a, a + size);
+    sort(b, b + size);
+    sort(c, c + size);
+
+    // Printing sorted arrays
+    cout << "Elements of array a: ";
+    for (int i = 0; i < size; i++) cout << a[i] << " ";
+    cout << endl;
+
+    cout << "Elements of array b: ";
+    for (int i = 0; i < size; i++) cout << b[i] << " ";
+    cout << endl;
+
+    cout << "Elements of array c: ";
+    for (int i = 0; i < size; i++) cout << c[i] << " ";
+    cout << endl;
+
+    // Finding common elements using three-pointer technique
+    int i = 0, j = 0, k = 0;
+    cout << "Common elements: ";
+    while (i < size && j < size && k < size) {
+        if (a[i] == b[j] && b[j] == c[k]) {
+            cout << a[i] << " ";
+            i++; j++; k++;
+        } else if (a[i] < b[j]) {
+            i++;
+        } else if (b[j] < c[k]) {
+            j++;
+        } else {
+            k++;
         }
-    }
-
-    // Alternating Placement
-    int oddIndex = 1, evenIndex = 0;
-    for (int i = size - 1; i >= size / 2; i--) {
-        array[oddIndex] = a[i];
-        oddIndex += 2;
-    }
-    for (int i = 0; i < size / 2; i++) {
-        array[evenIndex] = a[i];
-        evenIndex += 2;
-    }
-
-    // Output Final Array
-    cout << "Final array: ";
-    for (int i = 0; i < size; i++) {
-        cout << array[i] << " ";
     }
     cout << endl;
 
     // Free allocated memory
     delete[] a;
-    delete[] array;
+    delete[] b;
+    delete[] c;
 
     return 0;
 }
