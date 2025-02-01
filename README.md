@@ -1,29 +1,43 @@
-# Even-Odd Segregation in Array
+# Sorting and Alternating Array Arrangement
 
 ## Description
-This program takes an integer array as input and rearranges it such that:
-- **Even numbers** appear at the beginning.
-- **Odd numbers** appear at the end.
-- The relative order of even and odd numbers is maintained.
+This program:
+1. Takes an array as input from the user.
+2. Sorts the array in ascending order.
+3. Rearranges the sorted elements in a zigzag pattern where:
+   - The largest numbers are placed at **odd indices**.
+   - The smallest numbers are placed at **even indices**.
 
 ## Features
-- Accepts user input for array size and elements.
-- Dynamically allocates memory for input and output arrays.
-- Segregates even and odd numbers into different sections of the array.
-- Displays the transformed array.
+- Uses **dynamic memory allocation** for the array.
+- Implements **bubble sort** for sorting.
+- Uses **do-while loops** to alternate element placement.
+- Outputs the final rearranged array.
 
 ## Usage
 
 1. Enter the size of the array.
 2. Input the array elements.
-3. The program processes the array and segregates even and odd numbers.
-4. The transformed array is displayed.
+3. The program sorts the array.
+4. The sorted elements are arranged in the required pattern.
+5. The final array is displayed.
 
 ## Example
 
 **Input:**
-Enter array size= 6 Enter array element= 3 Enter array element= 2 Enter array element= 4 Enter array element= 1 Enter array element= 6 Enter array element= 5
+Enter size of array=
+6 Enter array element=
+5 Enter array element=
+1 Enter array element=
+3 Enter array element=
+6 Enter array element=
+2 Enter array element=
+4
 
 
-**Output:**
-2 4 6 3 1 5
+**Sorted Array:**  
+1 2 3 4 5 6
+
+
+**Final Output (Alternating Placement):**  
+6 1 5 2 4 3
