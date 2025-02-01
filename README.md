@@ -1,34 +1,27 @@
-# Finding Common Elements in Three Arrays
+# Finding Pairs That Sum to 10
 
 ## Description
 This program:
-1. Takes three arrays of equal size as input from the user.
-2. Prints each array's elements.
-3. Finds and displays elements that are **common** in all three arrays.
+1. Takes an array of integers as input.
+2. Finds **all pairs** of numbers (less than 10) whose sum is exactly **10**.
+3. Displays the indices and values of the pairs.
 
 ## Features
-- Uses **dynamic memory allocation**.
-- Implements **triple nested loops** to find common elements.
-- Displays input arrays before printing the common elements.
+- Uses **nested loops** to check all possible pairs.
+- Only considers numbers **less than 10**.
+- Displays results in a **readable format**.
 
 ## Usage
 
-1. Enter the size of the arrays.
-2. Input the elements for three arrays.
-3. The program will print the arrays and find common elements.
+1. Enter the size of the array.
+2. Input the array elements.
+3. The program will **print pairs** whose sum is **10**.
 
 ## Example
 
-**Input:**
-Enter size of element= 5 enter array 1 element= 1 2 3 4 5 enter array 2 element= 3 4 5 6 7 enter array 3 element= 5 6 7 8 9
+### **Input:**
+Enter array size= 5 Enter element= 3 Enter element= 7 Enter element= 6 Enter element= 4 Enter element= 5
 
 
-**Output:**
-Elements of array a=
-1 2 3 4 5
-Elements of array b=
-3 4 5 6 7
-Elements of array c=
-5 6 7 8 9
-
-Common element= 5
+### **Output:**
+Array element at 0 and at 1 (3 + 7) = 10 Array element at 2 and at 3 (6 + 4) = 10
