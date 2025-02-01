@@ -1,40 +1,28 @@
-# Room Reservation System
+# Find Three Largest Elements in an Array
 
 ## Description
-The **Room Reservation System** allows users to reserve rooms from a hotel that has both business and economy class rooms. The user can select the type of room (business or economy) and check availability. If a room is available, the user can reserve it, and the system updates the availability.
+This program takes an array of integers as input and determines the three largest elements in the array. It follows a simple comparison approach to identify:
+- The largest element
+- The second largest element
+- The third largest element
 
 ## Features
-- Users can select between business class (1) or economy class (2).
-- The system checks availability of rooms in the selected class.
-- If rooms are available, users can reserve a room.
-- The updated room status is displayed after each reservation.
-- Users can continue to reserve rooms as long as they want.
+- Takes user input for the array size and elements.
+- Finds the largest, second largest, and third largest elements.
+- Displays the results.
 
 ## Usage
 
-1. Upon starting the program, the user will be prompted to choose between business class (1) or economy class (2).
-2. The system will display available rooms and ask if the user wants to reserve one.
-3. If a room is reserved, the system will display the updated room status.
-4. The user will be asked if they want to reserve another room.
-5. This process continues until the user decides to stop.
+1. The program prompts the user to enter the size of the array.
+2. The user inputs the elements of the array.
+3. The program processes the array to determine the three largest elements.
+4. The largest, second largest, and third largest elements are displayed.
 
 ## Example
 
 **Input:**
-Enter 1 for business class and 2 for economy class. 1 Room no. 0 is free on 0 floor, do you want to reserve it? Press 1 for yes. 1
+Enter array size= 5 enter element= 12 enter element= 45 enter element= 32 enter element= 67 enter element= 21
 
 
 **Output:**
-Room no. 0 is reserved on 0 floor. Updated Room Status: 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-
-**Next Input:**
-Do you want to reserve another room? Press 1 for yes. 1
-
-
-**Next Output:**
-Enter 1 for business class and 2 for economy class. 2 Room no. 0 is free on 2 floor, do you want to reserve it? Press 1 for yes. 1
-
-
-**Output:**
-Room no. 0 is reserved on 2 floor. Updated Room Status: 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Largest element is= 67 Second Largest element is= 45 Third Largest element is= 32
