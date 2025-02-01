@@ -1,23 +1,25 @@
-# Array Sorting by Even and Odd Elements
+# Maximum Subarray Sum Sorting
 
 ## Description
-This C++ program sorts an input array such that all even elements appear first, followed by all odd elements. The relative order of the even and odd elements is maintained within their respective groups.
+This C++ program computes all possible subarrays from an input array, calculates the sum of each subarray, and then sorts the sums in descending order. The program dynamically allocates memory for input and output arrays.
 
 ## Features:
-- **Dynamic Memory Allocation**: Uses `new` to handle arrays dynamically.
-- **Efficient Sorting**: Even elements are placed at the beginning and odd elements at the end while keeping their relative order.
-- **User Input**: The user specifies the array size and elements for sorting.
+- **Dynamic Memory Allocation**: Memory for arrays is allocated using `new`.
+- **Subarray Sum Calculation**: Computes sums of all possible subarrays.
+- **Descending Sort**: Sorts the subarray sums in descending order.
+- **Display Results**: Displays the subarray sums before and after sorting.
 
 ## How It Works:
-1. **Array Input**: The user provides the size and elements of the array.
-2. **Sorting Process**: The program separates even and odd numbers and sorts them into a new array.
-3. **Display Sorted Array**: The sorted array (even numbers followed by odd numbers) is printed.
+1. **Array Input**: The user specifies the size and elements of the array.
+2. **Subarray Calculation**: The program computes all possible subarrays and their sums.
+3. **Sorting Process**: Subarray sums are sorted in descending order.
+4. **Display Sorted Sums**: The program prints the subarray sums before and after sorting.
 
 ## Usage:
 
 ### **Example Input:**
-Enter size of array= 5 Enter array element= 4 Enter array element= 3 Enter array element= 7 Enter array element= 2 Enter array element= 1
+Enter size of array= 4 Enter array element= 1 Enter array element= 2 Enter array element= 3 Enter array element= 4
 
 
 ### **Example Output:**
-4 2 3 7 1
+1 1 2 1 2 3 1 2 3 4 10 6 6 5 5 4 4 3 3 1
