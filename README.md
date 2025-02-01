@@ -1,25 +1,21 @@
-# Remove Duplicate Strings in 2D Array
+# Equilibrium Index Finder
 
 ## Description
-This C++ program performs the following:
-1. **Array Input**: The user inputs a 2D array of strings.
-2. **Duplicate Removal**: The program removes duplicate strings within each row, shifting the remaining elements to the left.
-3. **Display Result**: It prints the modified array with duplicates removed.
+This C++ program takes an array of integers as input and finds the **equilibrium index**. The equilibrium index is the position where the sum of the elements to the left of it is equal to the sum of the elements to the right.
 
 ## Features:
-- **Dynamic Memory Allocation**: Uses dynamic memory for creating and handling the 2D array.
-- **Duplicate Removal**: The program checks for duplicate strings within each row and removes them by shifting elements.
-- **Efficient Data Shifting**: Elements are shifted leftward to remove duplicates without leaving gaps.
+- **Array Input**: The user provides the size of the array and its elements.
+- **Equilibrium Index Calculation**: The program checks each index in the array to see if the sum of elements to the left is equal to the sum of elements to the right.
+- **Efficient Calculation**: Uses two loops to calculate the sums for the left and right sides for each index.
 
 ## How It Works:
-1. **Array Input**: The user provides the number of rows and columns for the 2D array, followed by the string elements for the array.
-2. **Removing Duplicates**: The program traverses each row and removes duplicates by comparing each element with the rest in the row.
-3. **Displaying Result**: After duplicates are removed, the program prints the modified array, with the column count updated to reflect the removal.
+1. **Array Input**: The program prompts the user to input the size of the array and the individual elements.
+2. **Equilibrium Check**: The program iterates through the array, for each index calculating the sum of elements to the left (`low`) and the sum of elements to the right (`up`).
+3. **Display Result**: If the sums match, the program outputs the index that is the equilibrium index.
 
 ## Example Input:
-Enter rows of array= 2 Enter columns of array= 4 Enter array element= apple Enter array element= banana Enter array element= apple Enter array element= cherry
+Enter size of array= 5 Enter array element= 1 Enter array element= 3 Enter array element= 5 Enter array element= 2 Enter array element= 2
 
 
 ### **Step-by-Step Output:**
-**After Removing Duplicates:**
-apple banana cherry banana cherry
+Equilibrium index is= 2

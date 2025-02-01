@@ -1,53 +1,38 @@
 #include <iostream>
 using namespace std;
-
-void Removing (string **arr, int &rows, int &col, int &found){
-    int y=0;
-    do{
-        
-        for (int i=0;i<col;i++){
-            for (int j=i+1;j<col;j++){
-                found=0;
-                if (arr[y][i]==arr[y][j]){
-                    found++;
-                    for (int a=j;a<col-1;a++){
-                        arr[y][a]=arr[y][a+1];
-                    }
-                }
-            }
-        }
-        y++;
-    }
-    
-    while (y<rows);
-}
 int main(){
-    int found=0;
-    int rows;
-    cout<<"Enter rows of array= "<<endl;
-    cin>>rows;
-    int col;
-    cout<<"Enter columns of array= "<<endl;
-    cin>>col;
-    string **arr= new string *[rows];
-    for (int i=0;i<rows;i++){
-        arr[i]=new string [col];
+    int x;
+    cout<<"Enter size of array= "<<endl;
+    cin>>x;
+    int *arr=new int [x];
+    for (int i=0;i<x;i++){
+        cout<<"Enter array element= "<<endl;
+        cin>>arr[i];
+    }
+    int a,b;
+    int low=0;
+    int up=0;
+    for (int i=1;i<x-1;i++){
+        a=0;
+        b=i+1;
+        do{
+            low+=arr[a];
+            a++;
+            }
+        while (a<i);
+        
+        do{
+            up+=arr[b];
+            b++;
+        }
+        while (b<x);
+        
+        if (low==up){
+            cout<<"Equilibrium index is= "<<i<<endl;
+            break;
+        }
+        up=0;
+        low=0;
     }
     
-    for (int i=0;i<rows;i++){
-        for (int j=0;j<col;j++){
-            cout<<"Enter array element= "<<endl;
-            cin>>arr[i][j];
-        }
-    }
-    
-    Removing(arr,rows,col,found);
-    col-=found;
-    for (int i=0;i<rows;i++){
-        for (int j=0;j<col-1;j++){
-            cout<<arr[i][j]<<" ";
-        }
-        cout<<endl;
-    }
-    cout<<endl;
 }
