@@ -1,28 +1,27 @@
-# Find Three Largest Elements in an Array
+# Find the Second Largest Element in an Array
 
 ## Description
-This program takes an array of integers as input and determines the three largest elements in the array. It follows a simple comparison approach to identify:
-- The largest element
-- The second largest element
-- The third largest element
+This program takes an array of integers as input and determines the second largest element. It uses a two-pass approach to:
+1. Identify the largest element in the array.
+2. Identify the second largest element by checking elements smaller than the largest.
 
 ## Features
-- Takes user input for the array size and elements.
-- Finds the largest, second largest, and third largest elements.
-- Displays the results.
+- Accepts user input for array size and elements.
+- Finds the second largest element.
+- Displays the result.
 
 ## Usage
 
-1. The program prompts the user to enter the size of the array.
+1. The user is prompted to enter the size of the array.
 2. The user inputs the elements of the array.
-3. The program processes the array to determine the three largest elements.
-4. The largest, second largest, and third largest elements are displayed.
+3. The program finds the largest and second largest elements.
+4. It prints the second largest element.
 
 ## Example
 
 **Input:**
-Enter array size= 5 enter element= 12 enter element= 45 enter element= 32 enter element= 67 enter element= 21
+Enter size of array= 5 Enter element= 12 Enter element= 45 Enter element= 32 Enter element= 67 Enter element= 21
 
 
 **Output:**
-Largest element is= 67 Second Largest element is= 45 Third Largest element is= 32
+Second largest element is= 45
