@@ -1,24 +1,32 @@
-# University Management System  
+# Dynamic Array Expansion and Shrinking  
 
 ## Overview  
-This program models a **university structure** with multiple components:  
-- **Person:** Base class for Students, Teachers, and TAs.  
-- **Teacher:** Represents a professor with a qualification, salary, and office hours.  
-- **TA (Teaching Assistant):** Represents a TA with a designation.  
-- **Student:** Represents a student with a GPA.  
-- **Classroom:** Contains students, a teacher, and a TA. Supports **adding and removing students dynamically**.  
-- **Department:** Manages a list of teachers and classrooms. Supports **adding and removing teachers**.  
-- **University:** Contains multiple departments and allows **adding and removing departments**.  
+This program demonstrates **dynamic memory management in C++** by implementing a resizable array. It performs the following steps:  
+
+1. **Dynamic Array Allocation:** Starts with a fixed-size array (`size = 5`).  
+2. **Automatic Expansion:** If more elements are entered, the array size increases in chunks of **5**.  
+3. **Input Termination:** Input stops when `-1` is entered.  
+4. **Array Shrinking:** The array is resized to fit exactly the entered values.  
+5. **Reverse Output:** Prints the array in **reverse order**.  
 
 ## Features  
-✅ **Encapsulation:** Each class has private members with getter/setter methods.  
-✅ **Inheritance:** `Teacher`, `TA`, and `Student` inherit from `Person`.  
-✅ **Dynamic Memory Allocation:** Used to store objects in `Classroom`, `Department`, and `University`.  
-✅ **Functions for Adding & Removing Entities:** Supports dynamic modification of university structure.  
+✅ **Dynamic Memory Allocation:** Uses `new` and `delete[]` for memory management.  
+✅ **Automatic Expansion:** Grows the array size as needed.  
+✅ **Memory Optimization:** Shrinks the array after input collection.  
+✅ **Reverse Output:** Prints elements in reverse order.  
 
 Example Output
 
-Department Name: Computer Science
-Number of Teachers: 1
-Teacher List:
-- mamoona
+Enter array element=  
+5  
+Enter array element=  
+8  
+Enter array element=  
+3  
+Enter array element=  
+10  
+Enter array element=  
+-1  
+
+Output in reverse order:  
+10 3 8 5  
