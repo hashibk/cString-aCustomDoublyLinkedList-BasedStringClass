@@ -1,24 +1,18 @@
-# Letter Frequency Counter  
+# Amount to Words Converter  
 
 ## Overview  
-This program calculates the frequency of each letter (both uppercase and lowercase) in a given sentence. It dynamically allocates memory for an array that tracks the count of each letter in the alphabet (a-z), and displays the frequency of only the letters that appear in the sentence.  
+This program allows users to enter an amount (between **1 and 100**) in rupees, and it prints the corresponding value in words. It uses a `switch` statement to map numeric values to their English word equivalents.  
 
 ## Features  
-✅ **Letter Frequency Calculation:** Tracks and counts the frequency of each letter in a given string.  
-✅ **Case Insensitivity:** The program counts both lowercase and uppercase letters equivalently.  
-✅ **Dynamic Memory Allocation:** Uses dynamic memory allocation for storing letter counts.  
-✅ **Display:** Outputs the frequency of each letter that appears in the string.  
+✅ **Amount Conversion:** Converts numbers from **1 to 100** into words.  
+✅ **User Input Handling:** Accepts an integer input from the user.  
+✅ **Case Handling with `switch`:** Uses a structured `switch-case` statement for easy mapping.  
 
 Example Output
 
-Enter a sentence=  
-Hello World!  
-
-Letter frequency=  
-h= 1  
-e= 1  
-l= 3  
-o= 2  
-w= 1  
-r= 1  
-d= 1  
+Enter Amount=  
+15  
+Fifteen Rupees Only.
+Enter Amount=  
+100  
+Hundred Rupees Only.
