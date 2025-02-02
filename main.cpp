@@ -1,58 +1,55 @@
 #include <iostream>
 using namespace std;
 
-void fillArray(int *&arr, int &x, int &num){
-    int i=0;
-    int count=0;
-    do{
-        cout<<"Enter array element= "<<endl;
-        cin>>arr[i];
-        if (arr[i]==-1){
-            count++;
-        }
-        i++;
-        num++;
-        if (i==5){
-            int *arr1=new int[x+5];
-            
-            for (int i=0;i<x;i++){
-                arr1[i]=arr[i];
-            }
-            x+=5;
-            delete [] arr;
-            arr=arr1;
-            arr1=NULL;
-        }
+void fillArray (int *&arr, int x){
+    cout << "Enter array elements: "<<endl;
+    for (int i = 0; i < x; i++) {
+        cin >> arr[i];
     }
-    while (count==0);
 }
 
-void shrinkArray(int *&arr, int num){
-    int *arr2=new int [num]; //if we do not want the "-1" to be a part of the array, then replace this line with "int *arr2=new int [num-1];"
-    for (int i=0;i<num;i++){
-        arr2[i]=arr[i];
+void compressArray (int *arr, int *&arr1, int &y, int x){
+    arr1[0]=arr[0];
+    for (int i = 1; i < x; i++) {
+        if ( arr[i] != arr[i - 1]) {
+            arr1[y] = arr[i];
+            y++;
+        }
     }
-    delete[]arr;
-    arr=arr2;
+}
+
+void shrinkArray (int *&arr1, int y){
+    int*arr2=new int [y];
+    for (int i=0;i<y;i++){
+        arr2[i]=arr1[i];
+    }
+    delete []arr1;
+    arr1=arr2;
     arr2=NULL;
-    
 }
 
-void outputArray(int *arr, int num){
-    for (int i=num-1;i>=0;i--){
-        cout<<arr[i]<<" ";
+void displayArray(int *arr1,int y){
+    cout << "Array with consecutive duplicates removed: ";
+    for (int i = 0; i < y; i++) {
+        cout << arr1[i] << " ";
     }
-    cout<<endl;
-    
+    cout << endl;
 }
 
-int main(){
-    int x=5;
-    int num=0;
-    int *arr=new int[x];
-    fillArray(arr,x,num);
-    shrinkArray(arr,num);
-    outputArray(arr,num);
-    delete []arr;
-
+int main() {
+    int x;
+    cout << "Enter number of elements: ";
+    cin >> x;
+    int *arr = new int[x];
+    int *arr1 = new int[x];
+    int y = 1;
+    fillArray(arr,x);
+    compressArray(arr,arr1,y,x);
+    shrinkArray(arr1,y);
+    displayArray(arr1,y);
+    
+    delete[] arr;
+    delete[] arr1;
+    
+    return 0;
 }

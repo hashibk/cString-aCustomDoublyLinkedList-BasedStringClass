@@ -1,32 +1,22 @@
-# Dynamic Array Expansion and Shrinking  
+# Array Compression: Removing Consecutive Duplicates  
 
 ## Overview  
-This program demonstrates **dynamic memory management in C++** by implementing a resizable array. It performs the following steps:  
+This program removes **consecutive duplicate elements** from an array while dynamically managing memory. The process follows these steps:  
 
-1. **Dynamic Array Allocation:** Starts with a fixed-size array (`size = 5`).  
-2. **Automatic Expansion:** If more elements are entered, the array size increases in chunks of **5**.  
-3. **Input Termination:** Input stops when `-1` is entered.  
-4. **Array Shrinking:** The array is resized to fit exactly the entered values.  
-5. **Reverse Output:** Prints the array in **reverse order**.  
+1. **Input Handling:** The user enters an array of integers.  
+2. **Compression:** Consecutive duplicate elements are removed.  
+3. **Memory Optimization:** The array is resized to store only the **unique values**.  
+4. **Output Display:** The compressed array is printed.  
 
 ## Features  
-✅ **Dynamic Memory Allocation:** Uses `new` and `delete[]` for memory management.  
-✅ **Automatic Expansion:** Grows the array size as needed.  
-✅ **Memory Optimization:** Shrinks the array after input collection.  
-✅ **Reverse Output:** Prints elements in reverse order.  
+✅ **Dynamic Memory Allocation:** Uses `new` and `delete[]` to manage memory.  
+✅ **Efficient Consecutive Duplicate Removal:** Stores only unique adjacent elements.  
+✅ **Optimized Memory Usage:** Shrinks the array after removing duplicates.  
 
 Example Output
 
-Enter array element=  
-5  
-Enter array element=  
-8  
-Enter array element=  
-3  
-Enter array element=  
-10  
-Enter array element=  
--1  
+Enter number of elements: 8  
+Enter array elements:  
+1 1 2 2 2 3 4 4  
 
-Output in reverse order:  
-10 3 8 5  
+Array with consecutive duplicates removed: 1 2 3 4  
