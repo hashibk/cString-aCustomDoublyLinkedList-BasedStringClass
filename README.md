@@ -1,36 +1,24 @@
-# 2D Array to 1D Array and Sorting  
+# Letter Frequency Counter  
 
 ## Overview  
-This program dynamically allocates a 2D array and allows the user to input values for each element. After converting the 2D array to a 1D array, the program sorts the elements of the 1D array in ascending order and outputs the sorted array.  
+This program calculates the frequency of each letter (both uppercase and lowercase) in a given sentence. It dynamically allocates memory for an array that tracks the count of each letter in the alphabet (a-z), and displays the frequency of only the letters that appear in the sentence.  
 
 ## Features  
-✅ **Dynamic Memory Allocation:** Uses `new` for memory allocation of the 2D array and the 1D array.  
-✅ **User Input Handling:** Ensures the user inputs only positive numbers for array elements.  
-✅ **Sorting:** Sorts the resulting 1D array in ascending order using bubble sort.  
-✅ **Display:** Outputs both the original 2D array and the sorted 1D array.  
+✅ **Letter Frequency Calculation:** Tracks and counts the frequency of each letter in a given string.  
+✅ **Case Insensitivity:** The program counts both lowercase and uppercase letters equivalently.  
+✅ **Dynamic Memory Allocation:** Uses dynamic memory allocation for storing letter counts.  
+✅ **Display:** Outputs the frequency of each letter that appears in the string.  
 
-Enter number of rows=  
-2  
-Enter columns for rows 1=  
-3  
-Enter columns for rows 2=  
-2  
-Enter array element=  
-5  
-Enter array element=  
-7  
-Enter array element=  
-9  
-Enter array element=  
--1  
-Enter array element=  
-6  
-Enter array element=  
-8  
+Example Output
 
-Original 2D Array:  
-5 7 9  
--1 6  
+Enter a sentence=  
+Hello World!  
 
-Sorted 1D Array:  
--1 5 6 7 8 9  
+Letter frequency=  
+h= 1  
+e= 1  
+l= 3  
+o= 2  
+w= 1  
+r= 1  
+d= 1  
