@@ -1,41 +1,20 @@
-# Merging Two Arrays with Sorted Order  
+# Dynamic Matrix Allocation and Display  
 
 ## Overview  
-This program takes two arrays as input, sorts them in different orders (ascending for the first array and descending for the second array), merges them into a new array, and displays the final merged array in ascending order.  
+This program dynamically allocates memory for a matrix based on user input for rows and columns, initializes all elements to zero, displays the matrix, and then deallocates the memory used.  
 
 ## Features  
-✅ **Dynamic Memory Allocation:** Uses `new` and `delete[]` for array memory management.  
-✅ **Sorting:** The first array is sorted in **ascending** order, and the second array in **descending** order.  
-✅ **Array Merging:** Merges the sorted arrays into a single array in **ascending** order.  
-✅ **Efficient Merging:** The program merges the arrays efficiently by comparing elements from both arrays.  
+✅ **Dynamic Memory Allocation:** Memory for the matrix is allocated at runtime using `new`.  
+✅ **Matrix Initialization:** The matrix is initialized with zeros using a loop.  
+✅ **Display:** The program displays the matrix in a formatted grid.  
+✅ **Memory Deallocation:** Memory is properly deallocated to prevent memory leaks.  
 
-Enter size of first array=  
-5  
-Enter size of second array=  
-6  
-Enter array elements=  
-1  
-Enter array elements=  
-2  
-Enter array elements=  
+Enter rows=  
 3  
-Enter array elements=  
-4  
-Enter array elements=  
-5  
+Enter columns=  
+3  
 
-Enter array elements=  
-6  
-Enter array elements=  
-7  
-Enter array elements=  
-8  
-Enter array elements=  
-9  
-Enter array elements=  
-10  
-Enter array elements=  
-11  
-
-Merged array ascending order=  
-1 2 3 4 5 6 7 8 9 10 11  
+Matrix:  
+0 0 0  
+0 0 0  
+0 0 0  
