@@ -1,33 +1,52 @@
-# Dataset Column Analyzer
+# cString: A Custom Doubly Linked List-Based String Class
 
 ## Overview
-This Jupyter Notebook reads two datasets, **Iris** and **Titanic**, and performs a basic analysis of selected columns. It prints the data types and counts the number of non-null instances for each chosen column.
+This project implements a **custom string class** (`cString`) using a **doubly linked list** in C++. Unlike standard C++ strings, this implementation allows **dynamic character manipulation** while avoiding direct array-based operations.  
 
-## Datasets Used
-- **Iris.csv**: Contains flower measurements like sepal length, petal length, etc.
-- **titanic.csv**: Contains passenger details such as age, siblings/spouses aboard, and fare paid.
+The class supports:
+- **String assignment** (`assign()`)
+- **Copy constructor**
+- **Checking if a string is a palindrome** (`isPalindrome()`)
+- **Copying string contents into a character array** (`copyConstructor()`)
+- **Removing specific characters from a string** (`removeAll()`)
+- **Proper memory management** (destructor)
 
 ## Features
-- Reads CSV files into pandas DataFrames.
-- Extracts specific columns for analysis.
-- Displays the data types of the selected columns.
-- Counts the total number of available (non-null) instances in each column.
+- **Dynamic memory allocation** using a **doubly linked list**
+- **Deep copying** to ensure independent instances
+- **Efficient palindrome detection**
+- **Flexible character removal**
+- **Automatic cleanup** using a destructor
 
-## Requirements
-- Python 3.x
-- Jupyter Notebook
-- pandas library
+## Usage
+### **1. String Assignment**
+```cpp
+cString word;
+word.assign("Pakistan");
+Assigns "Pakistan" to word.
 
-## How to Use
-1. Place `Iris.csv` and `titanic.csv` in the same directory as this notebook.
-2. Open the notebook in Jupyter.
-3. Run all cells to see the column analysis.
+2. Copy Constructor
+cString copyWord(word);
+Creates a deep copy of word.
 
-## Example Output
-Iris: SepalLengthCm: float64 SepalWidthCm: float64 PetalLengthCm: float64
+3. Checking for a Palindrome
+if (word.isPalindrome()) {
+    cout << "It is a Palindrome" << endl;
+} else {
+    cout << "Not a Palindrome" << endl;
+}
+4. Copying String Data to a Character Array
+char temp[100];
+word.copyConstructor(temp);
+cout << "Copied String: " << temp << endl;
+5. Removing Specific Characters
+cString toRemove;
+toRemove.assign("ntias");  // Characters to remove
+word.removeAll(toRemove);
+Removes all occurrences of 'n', 't', 'i', 'a', 's' from word.
 
-Titanic: Age: float64 SibSp: int64 Fare: float64
-
-Iris: SepalLengthCm: 150 SepalWidthCm: 150 PetalLengthCm: 150
-
-Titanic: Age: 891 SibSp: 891 Fare: 891
+Copy Constructor called: Pakistan
+Checking Palindrome...
+Not a Palindrome
+Checking Remove All Function...
+After removing: Pk
