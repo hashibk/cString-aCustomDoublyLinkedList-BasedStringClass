@@ -1,33 +1,33 @@
-# Picture Framing Cost Calculator
+# Dataset Column Analyzer
 
-## Description
-This program calculates the total cost of framing a picture based on user preferences. The user is prompted to input the picture's dimensions and select from various framing options. The final cost is computed based on the selected features.
+## Overview
+This Jupyter Notebook reads two datasets, **Iris** and **Titanic**, and performs a basic analysis of selected columns. It prints the data types and counts the number of non-null instances for each chosen column.
+
+## Datasets Used
+- **Iris.csv**: Contains flower measurements like sepal length, petal length, etc.
+- **titanic.csv**: Contains passenger details such as age, siblings/spouses aboard, and fare paid.
 
 ## Features
-- Choose between **Regular** or **Fancy** frames.
-- Option to add **color**, **crowns**, **glass**, and **cardboard** backing.
-- Cost calculations based on:
-  - Frame type
-  - Color customization
-  - Crowns (per crown cost)
-  - Glass covering (based on area)
-  - Cardboard backing (based on area)
-- Displays the total cost of the framed picture.
+- Reads CSV files into pandas DataFrames.
+- Extracts specific columns for analysis.
+- Displays the data types of the selected columns.
+- Counts the total number of available (non-null) instances in each column.
 
-Example Run
+## Requirements
+- Python 3.x
+- Jupyter Notebook
+- pandas library
 
-Enter Length and Width of Picture:
-10 8
-Enter desired type of frame, 1 for Regular and 2 for Fancy:
-1
-Do you want color other than white?
-yes
-Do you want to put crowns?
-yes
-Enter the Number of crowns:
-3
-Do you want Glass on top?
-yes
-Do you want Cardboard at the back?
-no
-Total cost for framing picture = 5.84
+## How to Use
+1. Place `Iris.csv` and `titanic.csv` in the same directory as this notebook.
+2. Open the notebook in Jupyter.
+3. Run all cells to see the column analysis.
+
+## Example Output
+Iris: SepalLengthCm: float64 SepalWidthCm: float64 PetalLengthCm: float64
+
+Titanic: Age: float64 SibSp: int64 Fare: float64
+
+Iris: SepalLengthCm: 150 SepalWidthCm: 150 PetalLengthCm: 150
+
+Titanic: Age: 891 SibSp: 891 Fare: 891
